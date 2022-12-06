@@ -25,6 +25,11 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+
     </application>
+    <queries>
+        <package android:name="com.whatsapp" />
+        <package android:name="com.whatsapp.w4b" />
+    </queries>
 
 </manifest>
