@@ -9,6 +9,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
@@ -17,14 +18,14 @@ import com.togitech.ccp.component.getFullPhoneNumber
 import com.togitech.ccp.component.isPhoneNumber
 
 @Composable
-fun ChatButton(openWhatsappContact: (String, Context) -> Unit) {
+fun ChatButton(openWhatsappContact: (String, Context) -> Unit, errorStatus: MutableState<Boolean>) {
     val context = LocalContext.current
     Button(
         onClick = {
             if (!isPhoneNumber()) {
                 openWhatsappContact(getFullPhoneNumber().drop(1), context)
             } else {
-//                    errorStatus.value = true
+                    errorStatus.value = true
             }
         },
         modifier = Modifier

@@ -3,9 +3,10 @@ package com.giripriyadarshan.towwn
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import android.telephony.PhoneNumberUtils
-import android.widget.Toast
+//import android.telephony.PhoneNumberUtils
+//import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
@@ -16,7 +17,7 @@ import androidx.core.content.ContextCompat.startActivity
 import androidx.navigation.compose.rememberNavController
 import com.giripriyadarshan.towwn.components.NavActivity
 import com.giripriyadarshan.towwn.components.NavBar
-import com.giripriyadarshan.towwn.lib.WhatsappPackage
+//import com.giripriyadarshan.towwn.lib.WhatsappPackage
 import com.giripriyadarshan.towwn.ui.theme.TOWWNTheme
 import com.togitech.ccp.component.*
 
@@ -39,11 +40,11 @@ class MainActivity : ComponentActivity() {
         Scaffold(
             bottomBar = { NavBar(navController) }
         ) {
-            NavActivity(navController = navController, openWhatsappContact = { number, context -> openUsingIntent(number, context) })
+            NavActivity(navController = navController, openWhatsappContact = { number, context -> openUsingUrl(number, context) })
         }
     }
 
-    private fun openUsingIntent(number: String, context: Context) {
+    /*private fun openUsingIntent(number: String, context: Context) {
         val sendIntent = Intent()
         sendIntent.action = Intent.ACTION_SEND
         sendIntent.putExtra(Intent.EXTRA_TEXT, ".")
@@ -60,6 +61,13 @@ class MainActivity : ComponentActivity() {
         } else {
             Toast.makeText(context, "WhatsApp not Installed", Toast.LENGTH_SHORT).show()
         }
+    }*/
+
+    private fun openUsingUrl(number: String, context: Context) {
+        val url = "https://api.whatsapp.com/send?phone=$number"
+        val i = Intent(Intent.ACTION_VIEW)
+        i.data = Uri.parse(url)
+        startActivity(context, i, null)
     }
 
 }

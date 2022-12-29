@@ -5,14 +5,12 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Info
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
@@ -26,6 +24,7 @@ import com.giripriyadarshan.towwn.components.CodePicker
 @Composable
 fun MainScreen(openWhatsappContact: (String, Context) -> Unit) {
     val focusManager = LocalFocusManager.current
+    val errorStatus = rememberSaveable { mutableStateOf(false) }
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
@@ -54,20 +53,8 @@ fun MainScreen(openWhatsappContact: (String, Context) -> Unit) {
                 modifier = Modifier
                     .padding(0.dp, 20.dp, 0.dp, 0.dp),
             )
-
-            IconButton(
-                onClick = { /*TODO*/ },
-                modifier = Modifier
-                    .padding(0.dp, 0.dp, 0.dp, 0.dp),
-            ) {
-                Icon(
-                    Icons.Outlined.Info,
-                    contentDescription = "Info",
-                    tint = MaterialTheme.colorScheme.onSurface,
-                )
-            }
         }
-        CodePicker()
-        ChatButton { number, context -> openWhatsappContact(number, context) }
+        CodePicker(errorStatus)
+        ChatButton( { number, context -> openWhatsappContact(number, context) }, errorStatus)
     }
 }
